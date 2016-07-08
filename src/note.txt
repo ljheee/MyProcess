@@ -1,0 +1,16 @@
+setExtendedState方法的输入参数是在Frame类中定义的常量：
+NORMAL：常态
+
+ICONIFIED：最小化
+MAXIMIZED_HORIZ：水平最大化
+MAXIMIZED_VERT：垂直最大化
+MAXIMIZED_BOTH：水平垂直都最大化
+
+因此，如果需要全屏话，可以这样：
+setExtendedState（Frame.MAXIMIZED_BOTH）;
+如果需要最小化，则可以这样：
+setExtendedState（Frame.ICONIFIED）;
+
+如果需要在最小化时隐藏到系统托盘的话，就可以在windowIconified方法中处理。
+J2SE6开始提供了SystemTray和TrayIcon俩个类来实现系统托盘功能，当然也可以使用开源的trayicon库来实现。
+
