@@ -41,7 +41,9 @@ public final class CmdToolkit {
         
         public static void main(String[] args) {
 			try {
-				readConsole("cmd /c taskmgr.exe ", true);
+//				readConsole("cmd /c taskmgr.exe ", true);
+//				readConsole("cmd /c tskill taskmgr.exe ", true);
+				Runtime.getRuntime().exec("taskkill /f /im taskmgr.exe");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

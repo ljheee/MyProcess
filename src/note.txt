@@ -14,3 +14,6 @@ setExtendedState（Frame.ICONIFIED）;
 如果需要在最小化时隐藏到系统托盘的话，就可以在windowIconified方法中处理。
 J2SE6开始提供了SystemTray和TrayIcon俩个类来实现系统托盘功能，当然也可以使用开源的trayicon库来实现。
 
+
+关闭任务管理器里的进程,比如“360se.exe”的进程--
+---Runtime.getRuntime().exec("taskkill /f /im 360se.exe");

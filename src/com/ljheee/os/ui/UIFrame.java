@@ -141,6 +141,7 @@ public class UIFrame {
 		newProcBtn.addActionListener(handle);
 		//Ω· ¯»ŒŒÒ
 		killProcBtn = new JButton("\u7ED3\u675F\u4EFB\u52A1");
+		killProcBtn.addActionListener(handle);
 		
 		GroupLayout gl_centerP = new GroupLayout(centerP);
 		gl_centerP.setHorizontalGroup(
@@ -253,6 +254,9 @@ public class UIFrame {
 			
 			if(e.getSource()==minLarge){//min size
 				jf.setExtendedState( Frame.ICONIFIED ); 
+			}
+			if(e.getSource()==killProcBtn){//kill the process
+				new KillProc(); 
 			}
 			
 			
