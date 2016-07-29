@@ -42,8 +42,9 @@ public final class CmdToolkit {
         public static void main(String[] args) {
 			try {
 //				readConsole("cmd /c taskmgr.exe ", true);
-//				readConsole("cmd /c tskill taskmgr.exe ", true);
-				Runtime.getRuntime().exec("taskkill /f /im taskmgr.exe");
+//				readConsole("cmd /c tskill taskmgr.exe ", true);//结束指定进程，在cmd里可以，此处不行
+				Runtime.getRuntime().exec("taskkill /f /im taskmgr.exe");//结束指定进程
+			
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
