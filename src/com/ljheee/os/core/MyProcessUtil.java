@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ljheee.os.model.ProcessInfo;
+
 /**
  * MyProcessUtil工具类
  * 
@@ -51,5 +53,45 @@ public class MyProcessUtil {
 		return map;
 	}
 
+	public static Map processList2() {
+		int count = 0;
+		BufferedReader br = null;
+		ProcessInfo pInfo = null;
+		HashMap<Integer, ProcessInfo> map = new HashMap<Integer, ProcessInfo>();
+
+		try {
+			Process proc = Runtime.getRuntime().exec("tasklist");
+			br = new BufferedReader(new InputStreamReader(proc.getInputStream(), "UTF-8"));
+			// System.out.println("正在运行的进程信息:");
+			String line = null;
+			String [] strArray = null; 
+
+			while ((line = br.readLine()) != null) {
+			// System.out.println(line);
+				strArray =  line.split("s");
+			//	map.put(++count, line);
+				System.out.println(strArray.length);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+				System.out.println("当前进程数：" + count);
+				System.out.println("当前进程：" + map.size());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return map;
+	}
+	
+	public static void main(String[] args) {
+		processList2();
+	}
 
 }
