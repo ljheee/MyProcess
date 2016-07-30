@@ -55,7 +55,7 @@ public class MyProcessUtil {
 		return map;
 	}
 
-	public static Map processList2() {
+	public  Map processList2() {
 		int Tcount = 0;
 		int count = 0;
 		BufferedReader br = null;
@@ -127,7 +127,7 @@ public class MyProcessUtil {
 	public static void main(String[] args) {
 		processList();
 		System.out.println("++++++++++++++++++++++++++");
-		Map map =  processList2();
+		Map map = new MyProcessUtil().processList2();
 		for (int i = 0; i < map.size(); i++) {
 			ProcessInfo  pInfo = (ProcessInfo) map.get(i);
 			System.out.println(pInfo);

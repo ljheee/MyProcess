@@ -1,5 +1,9 @@
 package com.ljheee.os.model;
-
+/**
+ * 实体类    封装进程详细信息
+ * @author ljheee
+ *
+ */
 public class ProcessInfo {
 
 	private String name;
