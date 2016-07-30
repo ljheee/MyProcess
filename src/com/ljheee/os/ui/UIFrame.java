@@ -18,6 +18,7 @@ import javax.swing.event.MenuListener;
 
 import com.ljheee.os.core.CmdToolkit;
 import com.ljheee.os.core.MyProcessUtil;
+import com.ljheee.os.model.ProcessInfo;
 
 /**
  *MyProcess
@@ -37,10 +38,13 @@ public class UIFrame {
 	
 	
 	JMenu showApp,showProc,showServer,showNet;
-	JTextArea textArea = null;
 	
 	ActionHandle handle = new ActionHandle();
 	MyMenuHandler menuHandle = new MyMenuHandler();
+	
+	
+	JTable table  = null;
+	JPanel showPanel = null;
 	
 	public UIFrame(){
 	
@@ -128,12 +132,8 @@ public class UIFrame {
 		JPanel centerP = new JPanel();
 		jf.getContentPane().add(centerP,BorderLayout.CENTER);
 		
-		JPanel showPanel = new JPanel(new BorderLayout());//
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		showPanel.add(new JScrollPane(textArea));
-		textArea.setSelectedTextColor(Color.blue);
-		textArea.setBackground(Color.gray);
+		showPanel = new JPanel(new BorderLayout());//
+		
 		 
 		
 		//新任务
@@ -165,12 +165,6 @@ public class UIFrame {
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
 		centerP.setLayout(gl_centerP);
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -214,6 +208,7 @@ public class UIFrame {
 	 *
 	 */
 	class ActionHandle implements ActionListener{
+		
 		Thread t1;
 
 		@Override
@@ -260,21 +255,6 @@ public class UIFrame {
 			}
 			
 			
-			//JMenu使用addMenuListener，此处使用addActionListener无效
-//			if(e.getSource()==showProc){//show Process    
-//				System.out.println("jinru");
-//				String line = null;
-//				Map map = MyProcessUtil.processList();
-//				leftInfo.setText("进程数:"+map.size());
-//				
-//				for (int i = 0; i < map.size(); i++) {
-//					line = (String) map.get(i);
-//					textArea.append(line);
-//					textArea.append("\n");
-//				}
-//			}
-			
-			
 		}
 	}
 	
@@ -289,23 +269,35 @@ public class UIFrame {
 
 		@Override
 		public void menuSelected(MenuEvent e) {
+			
 			if(e.getSource()==showProc){
-				String line = null;
-				Map map = MyProcessUtil.processList();
-				leftInfo.setText("进程数:"+map.size());
-				textArea.setText("");
+				Map map =  MyProcessUtil.processList2();
+				String[][] data = new String[map.size()][5];
+				String[] title = {"映像名称","PID","会话名","会话","内存"};
 				
+				
+				leftInfo.setText("进程数:"+map.size());
+				//clear
+				
+				
+				//init data
 				for (int i = 0; i < map.size(); i++) {
-					line = (String) map.get(i);
-					if(line!=null){
-						textArea.append(line);
-						textArea.append("\n");
-					}
-					
+					ProcessInfo pinfo = (ProcessInfo) map.get(i);
+					if(pinfo==null)   continue;
+ 					data[i][0] = pinfo.getName();
+					data[i][1] = pinfo.getPid();
+					data[i][2] = pinfo.getSessionName();
+					data[i][3] = pinfo.getSessionNum();
+					data[i][4] = pinfo.getMemory()+"K";
 				}
+				
+				table  = new JTable(data, title);
+				table.setEnabled(false);
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS );
+				showPanel.add(new JScrollPane(table));
+				jf.paint(jf.getGraphics());
 			}else{
-				textArea.setText("");
-				textArea.append("等待开发");
+				JOptionPane.showMessageDialog(null, "Wait");
 			}
 		}
 		
