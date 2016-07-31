@@ -17,6 +17,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.ljheee.os.core.CmdToolkit;
 import com.ljheee.os.core.MyProcessUtil;
@@ -276,7 +277,9 @@ public class UIFrame {
 					data[i][4] = pinfo.getMemory() + "K";
 				}
 
-				table = new JTable(data, title);
+				table = new JTable();
+				DefaultTableModel model = new DefaultTableModel(data, title);
+				table.setModel(model);
 				// table.setEnabled(false);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 				showPanel.add(new JScrollPane(table));
@@ -284,7 +287,9 @@ public class UIFrame {
 
 				new Thread(new Runnable() {//右击选择一列，结束进程
 					String killP = null;
-
+					int selectRow = 0;
+					
+					
 					@Override
 					public void run() {
 
@@ -296,6 +301,7 @@ public class UIFrame {
 								String input = "taskkill /f /im  " + killP;
 								try {
 									CmdToolkit.readConsole(input, true);// 执行结束进程
+									model.removeRow(selectRow);
 								} catch (IOException e1) {
 									e1.printStackTrace();
 									JOptionPane.showMessageDialog(jf, "异常" + e1.getMessage());
@@ -314,7 +320,7 @@ public class UIFrame {
 								// 判断是否是鼠标右击
 								if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) != 0 && !e.isControlDown()
 										&& !e.isShiftDown()) {
-									int selectRow = table.getSelectedRow();
+									selectRow = table.getSelectedRow();
 									killP = table.getModel().getValueAt(table.getSelectedRow(), 0) + "";
 									popup.show(table, e.getX(), e.getY());
 								}

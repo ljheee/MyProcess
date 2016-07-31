@@ -9,3 +9,9 @@ com.ljheee.os.test 	几个Demo
 
 
 Bug:无法实现真正意义上的刷新。结束一个进程后，进程没了，可进程那行记录还在JTable中。
+
+table = new JTable();
+DefaultTableModel model = new DefaultTableModel(data, title);
+table.setModel(model);
+
+model.removeRow(selectRow);//结束进程，从JTable中移除。
